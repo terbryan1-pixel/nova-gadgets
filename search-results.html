@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Nova Gadgets</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="logo">Nova Gadgets</a>
+    </header>
+
+    <section class="products">
+        <div class="container">
+            <h2>Search Results</h2>
+            <div id="searchResults" class="products-grid"></div>
+            <p id="noResultsMessage" style="display:none;">No products found.</p>
+        </div>
+    </section>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Grab the search query from URL
+const params = new URLSearchParams(window.location.search);
+const query = params.get('q')?.trim() || '';
+const resultsContainer = document.getElementById('searchResults');
+const noResults = document.getElementById('noResultsMessage');
+
+// prefer the canonical `products` array if available (populated by products.js), otherwise fall back
+const sourceProducts = window.products && Array.isArray(window.products) ? window.products : [
+    { title: "iPhone 17 Pro Max", price: "UGX 4,000,000", img: "images/iphone 17 pro max.jepg.jpeg", badge: "New" },
+    { title: "Samsung Galaxy S24", price: "UGX 2,500,000", img: "images/samsung s24.jepg.jpeg", badge: "New" },
+    { title: "iPhone 13", price: "UGX 1,000,000", img: "images/iphone 13.jepg.jpeg", badge: "Used - Excellent" },
+    { title: "Google Pixel 8 Pro", price: "UGX1,600,000", img: "images/google pixel pro 8.jepg.jpeg", badge: "New" },
+    { title: "Infinix Note 30", price: "UGX 800,000", img: "images/infinixnote30.jpg", badge: "New" },
+    { title: "Silicone Phone Case", price: "UGX 25,000", img: "images/phone-case.jpg", badge: "Accessory" },
+    { title: "Tempered Glass Screen Protector", price: "UGX 15,000", img: "images/screen-protector.jpg", badge: "Accessory" },
+    { title: "Fast USB-C Charger", price: "UGX 45,000", img: "images/usb-c-charger.jpg", badge: "Accessory" },
+    { title: "Wireless Earbuds", price: "UGX 120,000", img: "images/earbuds.jpg", badge: "Accessory" }
+];
+
+// if query empty, show no results (avoid includes('') matching everything)
+if (!query) {
+    noResults.style.display = "block";
+} else {
+    let found = 0;
+
+    sourceProducts.forEach(product => {
+        // build searchable haystack and match via matchesQuery when available
+        const hay = `${product.title || ''} ${product.category || ''} ${product.badge || ''}`;
+        const matched = (typeof matchesQuery === 'function') ? matchesQuery(hay, query.toLowerCase()) : (String(hay).toLowerCase().includes(query.toLowerCase()));
+        if (matched) {
+            found++;
+            const div = document.createElement('div');
+            div.classList.add('product-card');
+            div.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.img}" />
+                    <span class="product-badge">${product.badge || ''}</span>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">${product.title || product.name}</h3>
+                    <div class="product-footer">
+                        <span class="product-price">${product.price || ''}</span>
+                        <button class="btn-buy">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                            Buy
+                        </button>
+                    </div>
+                </div>
+            `;
+            if (product.category && div.dataset) div.dataset.category = (product.category);
+            resultsContainer.appendChild(div);
+        }
+    });
+
+    if (found === 0) noResults.style.display = "block";
+}
+
+// if we reached this page via a search query, hide the header/other sections
+if (query !== "" && typeof togglePageVisibility === 'function') {
+    // togglePageVisibility is defined in script.js
+    togglePageVisibility(true);
+}
+
+// Setup WhatsApp Buy buttons for search results
+function setupSearchResultsWhatsAppButtons() {
+    const buyButtons = document.querySelectorAll('.btn-buy');
+    const whatsappNumber = '256753719042'; // Nova Gadgets WhatsApp number (digits only for wa.me)
+
+    buyButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get product title from the parent card
+            const productTitle = this.closest('.product-card')
+                .querySelector('.product-title')
+                .textContent.trim();
+            
+            // Create WhatsApp message
+            const message = `Hello Nova, can I get this product? ${productTitle}`;
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+        });
+    });
+}
+
+// Initialize WhatsApp buttons after results are rendered
+setupSearchResultsWhatsAppButtons();
+
+</script>
+</body>
+</html>
