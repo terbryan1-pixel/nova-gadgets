@@ -535,6 +535,333 @@ const products = [
         badge: "New",
         category: "Accessory"
     },
+    // Accessories: Power banks (Uganda market capacities)
+    {
+        title: "Oraimo Powerbank 10,000mAh",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Oraimo Powerbank 20,000mAh",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Excellent Powerbank 10,000mAh",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Excellent Powerbank 20,000mAh",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Powerbank 30,000mAh",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1503602642458-232111445657?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Memory cards (different capacities)
+    {
+        title: "Memory Card 16GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617766-c94804975da3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Memory Card 32GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617766-c94804975da3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Memory Card 64GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617766-c94804975da3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Memory Card 128GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617766-c94804975da3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Memory Card 256GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617766-c94804975da3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Smart watches
+    {
+        title: "Smart Watch (Generic)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Apple Watch",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Samsung Galaxy Watch",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Wired earphones (receiver = with mic)
+    {
+        title: "Wired Earphones (Receiver) - Samsung",
+        price: "UGX Contact for price",
+        img: "images/earphone.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Wired Earphones (Non-Receiver) - Samsung",
+        price: "UGX Contact for price",
+        img: "images/earphone.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Wired Earphones (Receiver) - Dr Lee",
+        price: "UGX Contact for price",
+        img: "images/earphone.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Wired Earphones (Non-Receiver) - Dr Lee",
+        price: "UGX Contact for price",
+        img: "images/earphone.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Wired Earphones (Receiver) - Uganda Brand",
+        price: "UGX Contact for price",
+        img: "images/earphone.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Wired Earphones (Non-Receiver) - Uganda Brand",
+        price: "UGX Contact for price",
+        img: "images/earphone.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Cables & chargers
+    {
+        title: "USB Data Cable (Type-C)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1585386959984-a415522f3d6b?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "USB Data Cable (Micro-USB)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1585386959984-a415522f3d6b?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "USB Data Cable (iPhone Lightning)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1608501221513-7b5b392d14c5?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "4G LTE Cable",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617117-08fda5f2f0d0?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Universal Charger",
+        price: "UGX Contact for price",
+        img: "images/charger.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Charger Head - Oraimo",
+        price: "UGX Contact for price",
+        img: "images/charger.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Charger Head - Samsung",
+        price: "UGX Contact for price",
+        img: "images/charger.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Charger Head - Apple",
+        price: "UGX Contact for price",
+        img: "images/charger.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Full Charger (Cable + Head)",
+        price: "UGX Contact for price",
+        img: "images/charger.jepg.jepg.jpeg",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Card readers
+    {
+        title: "Card Reader (OTG)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1555617766-c94804975da3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Button phone batteries (Itel / Tecno)
+    {
+        title: "Button Phone Battery - Itel (Small)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1582719478250-2a5b9d4c3c60?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Button Phone Battery - Itel (Medium)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1582719478250-2a5b9d4c3c60?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Button Phone Battery - Itel (Large)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1582719478250-2a5b9d4c3c60?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Button Phone Battery - Tecno (Small)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1582719478250-2a5b9d4c3c60?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Button Phone Battery - Tecno (Medium)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1582719478250-2a5b9d4c3c60?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Button Phone Battery - Tecno (Large)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1582719478250-2a5b9d4c3c60?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Beats headsets
+    {
+        title: "Beats Headset (Solo Style)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "Beats Headset (Studio Style)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: JBL speakers
+    {
+        title: "JBL Speaker (GO Style)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1518444027223-6b7bb4b1d3d9?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "JBL Speaker (Charge Style)",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1518444027223-6b7bb4b1d3d9?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: SanDisk flash disks (different sizes)
+    {
+        title: "SanDisk Flash Disk 16GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "SanDisk Flash Disk 32GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "SanDisk Flash Disk 64GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    {
+        title: "SanDisk Flash Disk 128GB",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Phone rings
+    {
+        title: "Phone Ring / Ring Stand",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1580910051071-1f6e1f1e0b3b?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
+    // Accessories: Ring lights (different sizes)
+    {
+        title: "Ring Light 6 inch",
+        price: "UGX Contact for price",
+        img: "https://images.unsplash.com/photo-1602524818402-0d6ef2c6a6d3?q=80&w=1080",
+        badge: "New",
+        category: "Accessory"
+    },
     // Phones category additions: Kids tablets
     {
         title: "Kids Tablet 7 inch",

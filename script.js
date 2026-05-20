@@ -266,12 +266,14 @@ if (document.readyState === 'loading') {
         setupWhatsAppBuyButtons();
         setupProductDetailsModal();
         setupShopNow();
+        setupViewAllProducts();
     });
 } else {
     assignDataCategoryToStaticCards();
     setupWhatsAppBuyButtons();
     setupProductDetailsModal();
     setupShopNow();
+    setupViewAllProducts();
 }
 
 function setupShopNow() {
@@ -322,6 +324,30 @@ function setupShopNow() {
             if (servicesSection) servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
+}
+
+function setupViewAllProducts() {
+    const viewAllBtn = document.getElementById('viewAllProductsBtn');
+    if (!viewAllBtn) return;
+
+    viewAllBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        if (typeof restoreAllSections === 'function') restoreAllSections();
+
+        // Render everything from products.js into the grid
+        if (typeof filterCategory === 'function') filterCategory('All');
+
+        // Ensure accessories are visible too
+        if (typeof setAccessoriesOpen === 'function') setAccessoriesOpen(true);
+
+        // Rebind handlers for the newly rendered cards/buttons
+        setupWhatsAppBuyButtons();
+        setupProductDetailsModal();
+
+        const productsGrid = document.querySelector('.products-grid');
+        if (productsGrid) productsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 }
 
 function normalizeTitleKey(title) {
