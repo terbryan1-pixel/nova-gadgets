@@ -78,6 +78,27 @@ ul {
     padding: 1rem 0;
 }
 
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    color: #111827;
+    font-size: 0.95rem;
+    font-weight: 600;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.back-button:hover {
+    background: #f8fafc;
+    border-color: #9ca3af;
+}
+
 .logo {
     display: flex;
     flex-direction: column;
@@ -593,7 +614,7 @@ ul {
 .product-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.3s ease;
 }
 
@@ -830,10 +851,6 @@ ul {
     margin-top: 20px;
     color: red;
     font-weight: bold;
-}
-
-.hidden-product {
-    display: none;
 }
 
 /* Products slide-in reveal (Shop Now) */

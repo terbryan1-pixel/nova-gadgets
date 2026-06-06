@@ -8,7 +8,12 @@
 </head>
 <body>
     <header class="header">
-        <a href="index.html" class="logo">Nova Gadgets</a>
+        <div class="container">
+            <div class="header-content">
+                <button id="pageBackBtn" class="back-button" type="button" style="display:none;">← Back</button>
+                <a href="index.html" class="logo">Nova Gadgets</a>
+            </div>
+        </div>
     </header>
 
     <section class="products">
@@ -87,6 +92,9 @@ if (!query) {
 if (query !== "" && typeof togglePageVisibility === 'function') {
     // togglePageVisibility is defined in script.js
     togglePageVisibility(true);
+    const header = document.querySelector('header');
+    if (header) header.style.display = '';
+    if (typeof setBackButtonVisible === 'function') setBackButtonVisible(true);
 }
 
 // Setup WhatsApp Buy buttons for search results

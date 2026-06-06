@@ -44,6 +44,45 @@ function setAccessoriesOpen(open) {
     if (btn) btn.textContent = accessoriesOpen ? 'Hide Accessories' : 'Accessories';
 }
 
+function setBackButtonVisible(visible) {
+    const backBtn = document.getElementById('pageBackBtn');
+    if (!backBtn) return;
+    backBtn.style.display = visible ? 'inline-flex' : 'none';
+}
+
+function pushTabHistoryState(tabView, hash) {
+    setBackButtonVisible(true);
+    if (window.history && window.history.pushState) {
+        window.history.pushState({ tabView }, '', hash);
+    }
+}
+
+function handleBackButtonClick() {
+    const backBtn = document.getElementById('pageBackBtn');
+    if (!backBtn) return;
+    backBtn.addEventListener('click', () => {
+        if (window.history && window.history.state && window.history.state.tabView) {
+            window.history.back();
+        } else {
+            restoreAllSections();
+        }
+    });
+}
+
+window.addEventListener('popstate', () => {
+    if (location.hash === '#accessories') {
+        openAccessoriesView(false);
+    } else if (location.hash === '#phones-new') {
+        openPhonesView(false, 'new');
+    } else if (location.hash === '#phones-used') {
+        openPhonesView(false, 'used');
+    } else if (location.hash === '#phones') {
+        openPhonesView(false, 'all');
+    } else {
+        restoreAllSections();
+    }
+});
+
 // Helper: normalize category strings used across the app
 function normalizeCategory(cat) {
     if (!cat) return '';
@@ -335,17 +374,20 @@ function setupViewAllProducts() {
 
         if (typeof restoreAllSections === 'function') restoreAllSections();
 
-        // Render everything from products.js into the grid
-        if (typeof filterCategory === 'function') filterCategory('All');
+        const productsGrid = document.querySelector('.products-grid');
+        const hasStaticCards = productsGrid && productsGrid.querySelector('.product-card');
+        const shouldRenderFromData = !hasStaticCards && typeof filterCategory === 'function';
 
-        // Ensure accessories are visible too
+        if (shouldRenderFromData) {
+            // Build cards only when no static product cards exist yet.
+            filterCategory('All');
+            setupWhatsAppBuyButtons();
+            setupProductDetailsModal();
+        }
+
+        // Ensure accessories are visible too and restore normal product filtering state.
         if (typeof setAccessoriesOpen === 'function') setAccessoriesOpen(true);
 
-        // Rebind handlers for the newly rendered cards/buttons
-        setupWhatsAppBuyButtons();
-        setupProductDetailsModal();
-
-        const productsGrid = document.querySelector('.products-grid');
         if (productsGrid) productsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 }
@@ -574,6 +616,11 @@ function setupServiceDetailsToggles() {
     links.forEach(link => {
         link.addEventListener('click', function (e) {
             e.preventDefault();
+            if (this.dataset && this.dataset.service === 'phones') {
+                openPhonesView();
+                return;
+            }
+
             const card = this.closest('.service-card');
             if (!card) return;
             const details = card.querySelector('.service-details');
@@ -614,10 +661,14 @@ function showOnlyProductsSection() {
 function restoreAllSections() {
     document.querySelectorAll('section').forEach(sec => sec.style.display = '');
     restoreProductsView();
+    setBackButtonVisible(false);
+    if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
 }
 
 // Open accessories view: show only accessory product-cards and scroll to products
-function openAccessoriesView() {
+function openAccessoriesView(pushHistory = true) {
     // move products section immediately below header by hiding other sections
     showOnlyProductsSection();
     const productsSection = document.getElementById('products');
@@ -636,6 +687,8 @@ function openAccessoriesView() {
     accessoriesOpen = true;
     const btn = document.getElementById('toggleAccessoriesBtn');
     if (btn) btn.textContent = 'Hide Accessories';
+    setBackButtonVisible(true);
+    if (pushHistory) pushTabHistoryState('accessories', '#accessories');
 
     // scroll to products
     const productsGrid = document.querySelector('.products-grid');
@@ -704,7 +757,7 @@ if (document.readyState === 'loading') {
 }
 
 // Open phones view: show only phone product-cards (non-accessory) and scroll to products
-function openPhonesView() {
+function openPhonesView(pushHistory = true, subtype = 'all') {
     // hide other sections so products appear at top
     showOnlyProductsSection();
     const productsSection = document.getElementById('products');
@@ -712,13 +765,28 @@ function openPhonesView() {
 
     const allCards = document.querySelectorAll('.product-card');
     allCards.forEach(card => {
-        // treat cards without data-category or with category !== 'Accessory' as phones
-        if (!card.dataset || card.dataset.category !== 'Accessory') {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
+        const category = card.dataset && card.dataset.category ? card.dataset.category.toLowerCase() : '';
+        const isAccessory = category.includes('accessor');
+        let visible = false;
+
+        if (isAccessory) {
+            visible = false;
+        } else if (subtype === 'all') {
+            visible = true;
+        } else if (subtype === 'new') {
+            visible = category.includes('new');
+        } else if (subtype === 'used') {
+            visible = category.includes('used');
         }
+
+        card.style.display = visible ? '' : 'none';
     });
+
+    setBackButtonVisible(true);
+    if (pushHistory) {
+        const hash = subtype === 'new' ? '#phones-new' : subtype === 'used' ? '#phones-used' : '#phones';
+        pushTabHistoryState(`phones-${subtype}`, hash);
+    }
 
     // scroll to products grid
     const productsGrid = document.querySelector('.products-grid');
@@ -727,14 +795,43 @@ function openPhonesView() {
 
 // Make any visible "Phones" text open phones view when clicked
 function setupPhonesOpenLinks() {
-    const selectors = ['.nav-desktop .nav-link', '.nav-mobile .nav-link', '.service-title', '.footer-links li', '.category-filters button'];
+    const selectors = ['.nav-desktop .nav-link', '.nav-mobile .nav-link', '.service-title', '.footer-links li', '.footer-links a', '.category-filters button'];
     selectors.forEach(sel => {
         document.querySelectorAll(sel).forEach(el => {
-            if (el.textContent && el.textContent.toLowerCase().includes('phones') && !el.textContent.toLowerCase().includes('new')) {
+            if (el.tagName && el.tagName.toLowerCase() === 'li' && el.querySelector('a')) return;
+            if (!el.textContent) return;
+            const text = el.textContent.toLowerCase().trim();
+            const phoneView = el.dataset && el.dataset.phoneView;
+
+            if (phoneView === 'new') {
                 el.style.cursor = 'pointer';
                 el.addEventListener('click', (e) => {
                     e.preventDefault();
-                    openPhonesView();
+                    openPhonesView(true, 'new');
+                });
+            } else if (phoneView === 'used') {
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openPhonesView(true, 'used');
+                });
+            } else if (text.includes('new phones')) {
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openPhonesView(true, 'new');
+                });
+            } else if (text.includes('used phones')) {
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openPhonesView(true, 'used');
+                });
+            } else if (text.includes('phones')) {
+                el.style.cursor = 'pointer';
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openPhonesView(true, 'all');
                 });
             }
         });
@@ -745,6 +842,25 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupPhonesOpenLinks);
 } else {
     setupPhonesOpenLinks();
+}
+
+function initializeBackButtonAndHashBehavior() {
+    handleBackButtonClick();
+    if (location.hash === '#accessories') {
+        openAccessoriesView(false);
+    } else if (location.hash === '#phones-new') {
+        openPhonesView(false, 'new');
+    } else if (location.hash === '#phones-used') {
+        openPhonesView(false, 'used');
+    } else if (location.hash === '#phones') {
+        openPhonesView(false, 'all');
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeBackButtonAndHashBehavior);
+} else {
+    initializeBackButtonAndHashBehavior();
 }
 
 // (old header accessories navigation removed — header anchors are handled by setupAccessoriesOpenLinks)
